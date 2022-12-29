@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<ul>
+  <li onclick="kakaoLogin();">
+    <a href="javascript:void(0)">
+      <span>카카오 로그인</span>
+    </a>
+  </li>
+  <li onclick="kakaoLogout();">
+    <a href="javascript:void(0)">
+      <span>카카오 로그아웃</span>
+    </a>
+  </li>
+</ul>
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+<script>
+
+Kakao.init('853cd59c22a4f605fad8e5861e0c3923');
+console.log(Kakao.isInitialized());
+//카카오로그인
+function kakaoLogin() {
+    Kakao.Auth.login({
+      success: function (response) {
+        Kakao.API.request({
+          url: '/v2/user/me',
+          success: function (response) {
+        	  console.log(response)
+        	  alert(JSON.stringify(response))
+          },
+          fail: function (error) {
+            console.log(JSON.stringify(error))
+            alert("fail"+error)
+          },
+        })
+      },
+      fail: function (error) {
+        console.log("fail2"+error)
+        alert(error)
+      },
+    })
+  }
+
+//카카오로그아웃
+function kakaoLogout() {
+    if (Kakao.Auth.getAccessToken()) {
+      Kakao.API.request({
+        url: '/v1/user/unlink',
+        success: function (response) {
+        	console.log(response)
+        	alert(JSON.stringify(response))
+        },
+        fail: function (error) {
+          console.log(error)
+          alert(JSON.stringify(error))
+        },
+      })
+      Kakao.Auth.setAccessToken(undefined)
+    }
+  }
+
+</script>
+</body>
+</html>

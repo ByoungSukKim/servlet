@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <title>Title</title>
+
+
+
+</head>
+<body>
+
+  <!-- 휴대폰 본인 인증 -->
+  <form name="checkPlusForm" id="checkPlusForm" method="post">
+    <input type="hidden" name="m" id="m" value="checkplusService"/>
+    <input type="hidden" name="EncodeData" id="EncodeData"/>
+    <input type="hidden" name="param_r1" id="param_r1" value="join"/>
+    <input type="hidden" name="param_r2" id="param_r2" value=""/>
+    <input type="hidden" name="accreditation" id="accreditation" value="<%=ipinCIYN%>"/>
+  </form>
+
+  <!-- 아이핀 본인 인증 -->
+  <form name="form_ipin" method="post" accept-charset="euc-kr">
+    <input type="hidden" name="m" value="pubmain"/>
+    <input type="hidden" name="enc_data">
+    <input type="hidden" name="param_r1" value="">
+    <input type="hidden" name="param_r2" value="">
+    <input type="hidden" name="param_r3" value="">
+  </form>
+
+  <!-- 부모페이지로 이동하기 위한 form-->
+  <form name="vnoform" method="post">
+    <input type="hidden" name="enc_data">
+    <input type="hidden" name="param_r1" value="">
+    <input type="hidden" name="param_r2" value="">
+    <input type="hidden" name="param_r3" value="">
+   </form>
+
+  <button onClick={onClickCertify}> 휴대폰 인증 </button>
+
+</body>
+</html>
