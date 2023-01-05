@@ -11,22 +11,20 @@ public class EventLoginService {
 
     private final ApplicationEventPublisher applicationEventPublisher;
 
-    /*public EventLoginService(ApplicationEventPublisher applicationEventPublisher) {
-        this.applicationEventPublisher = applicationEventPublisher;
-    }*/
-
     public LoginEvent publishLoginEvent(String id, String pw) {
         LoginEvent loginEvent = new LoginEvent(this,id,pw);
         applicationEventPublisher.publishEvent(loginEvent);
 
         //리턴값 셋팅
-        LoginEvent resultLoginEvent = new LoginEvent(this);
+        /*LoginEvent resultLoginEvent = new LoginEvent(this);*/
         System.out.println("loginEvent.getId() = " + loginEvent.getId());
-        resultLoginEvent.setId(loginEvent.getId());
+        /*resultLoginEvent.setId(loginEvent.getId());*/
+        /*loginEvent.setId(loginEvent.getId());*/
         System.out.println("loginEvent.getPw() = " + loginEvent.getPw());
-        resultLoginEvent.setPw(loginEvent.getPw());
+        /*resultLoginEvent.setPw(loginEvent.getPw());*/
+        /*loginEvent.setPw(loginEvent.getPw());*/
 
-        return resultLoginEvent;
+        return loginEvent;
 
     }
 }

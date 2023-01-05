@@ -7,6 +7,7 @@ import com.TestNice.servlet.service.LoginService;
 import com.TestNice.servlet.service.OAuthService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import javax.sql.DataSource;
 
@@ -43,6 +44,10 @@ public class SpringConfig {
         return new OauthLoginRepository(dataSource);
     }
 
+    @Bean
+    MappingJackson2JsonView jsonView(){
+        return new MappingJackson2JsonView();
+    }
 
 
 

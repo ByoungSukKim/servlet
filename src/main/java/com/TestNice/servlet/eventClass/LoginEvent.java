@@ -12,7 +12,9 @@ public class LoginEvent extends ApplicationEvent {
     private String pw;
 
     public LoginEvent(Object source) {
+
         super(source);
+
     }
 
     public LoginEvent(Object source, String id, String pw) {

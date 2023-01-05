@@ -34,6 +34,8 @@ dependencies {
 	runtimeOnly 'com.h2database:h2'
 	//Gson 추가 >
 	implementation 'com.google.code.gson:gson:2.8.7'
+	//jwt를 위한 의존성 추가
+	implementation 'io.jsonwebtoken:jjwt:0.9.1'
 }
 
 tasks.named('test') {

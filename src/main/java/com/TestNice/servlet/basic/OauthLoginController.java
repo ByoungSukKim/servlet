@@ -1,13 +1,27 @@
 package com.TestNice.servlet.basic;
 
 import com.TestNice.servlet.entity.Kakao;
+import com.TestNice.servlet.entity.Naver;
 import com.TestNice.servlet.repository.OauthLoginRepository;
 import com.TestNice.servlet.service.OAuthService;
+import com.TestNice.servlet.token.NaverOAuthToken;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.awt.*;
 import java.util.Optional;
 
 @RestController
@@ -30,7 +44,7 @@ public class OauthLoginController {
     @GetMapping("/kakao")
     public ModelAndView kakaoCallback(@RequestParam String code) {
 
-        ModelAndView mav = new ModelAndView();
+        ModelAndView mav = new ModelAndView("jsonView");
 
         System.out.println("code = " + code);
         String token = oAuthService.getKakaoAccessToken(code);
@@ -40,6 +54,8 @@ public class OauthLoginController {
         Kakao kakaoLogin = kakao.get();
         String email2 = kakaoLogin.getKakao();
         String id = kakaoLogin.getId();
+        System.out.println("id = " + id);
+        System.out.println("email2 = " + email2);
 
         Kakao kakaologinResult = new Kakao();
 
@@ -52,20 +68,47 @@ public class OauthLoginController {
             kakaologinResult.setId("error");
 
         }
+        Gson gson = new Gson();
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("id", kakaologinResult.getId());
 
         mav.setViewName("/loginResult.jsp");
-        mav.addObject("loginResult", kakaologinResult);
+        mav.addObject("loginResult", jsonObject);
+        System.out.println("Controller End ");
         return mav;
 
     }
 
     @ResponseBody
     @GetMapping("/naver")
-    public ModelAndView naverCallback(@RequestParam String code, @RequestParam String state) {
+    public ModelAndView naverCallback(@RequestParam String code, @RequestParam String state) throws JsonProcessingException {
+        String token = oAuthService.getNaverAccessToken(code);
+        Naver naverUser = oAuthService.createNaverUser(token);
+        Optional<Naver> naver = oAuthService.loginNaverUser(naverUser);
+        Naver naver1 = naver.get();
+        String phone = naver1.getPhone();
+        String id = naver1.getId();
+        System.out.println("id = " + id);
+        System.out.println("phone = " + phone);
+        String UserphoneNum = naverUser.getPhone();
+        UserphoneNum = UserphoneNum.replace("-","");
 
-        System.out.println("naver code = " + code);
-        System.out.println("naver state = " + state);
+        Naver naverResult = new Naver();
+        if (UserphoneNum.equals(phone)) {
+
+            naverResult.setId(id);
+
+        } else {
+
+            naverResult.setId("error");
+
+        }
+        
+
         ModelAndView mav = new ModelAndView();
+        mav.setViewName("/loginResult.jsp");
+        mav.addObject("loginResult", naverResult);
         return mav;
     }
+
 }

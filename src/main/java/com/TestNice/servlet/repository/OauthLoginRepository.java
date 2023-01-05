@@ -2,6 +2,7 @@ package com.TestNice.servlet.repository;
 
 import com.TestNice.servlet.entity.Kakao;
 import com.TestNice.servlet.entity.Login;
+import com.TestNice.servlet.entity.Naver;
 import com.TestNice.servlet.eventClass.LoginEvent;
 import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.datasource.DataSourceUtils;
@@ -68,6 +69,46 @@ public class OauthLoginRepository implements OuathRepository{
         }
     }
 
+    public Optional<Naver> OauthloginAccountN (Naver paramN) {
+
+        String sql = "select * from authorLogin where phone = ?";
+
+        Connection conn = null;
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        String updateString  = paramN.getPhone().replace("-","");
+
+        try {
+
+            conn = getConnection();
+            pstm = conn.prepareStatement(sql);
+
+            pstm.setString(1, updateString);
+            rs = pstm.executeQuery();
+
+            if(rs.next()) {
+
+                Naver naver = new Naver();
+                naver.setId(rs.getString("id"));
+                naver.setPhone(rs.getString("phone"));
+
+                return Optional.of(naver);
+
+            } else {
+
+                return Optional.empty();
+
+            }
+
+
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        } finally {
+            close(conn, pstm);
+        }
+    }
+
+
     private Connection getConnection() {
         return DataSourceUtils.getConnection(dataSource);
     }
@@ -92,5 +133,7 @@ public class OauthLoginRepository implements OuathRepository{
     private void close(Connection conn) throws SQLException {
         DataSourceUtils.releaseConnection(conn, dataSource);
     }
+
+
 
 }
