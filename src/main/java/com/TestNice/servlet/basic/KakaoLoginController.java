@@ -4,6 +4,8 @@ import com.TestNice.servlet.entity.Login;
 import com.TestNice.servlet.eventClass.LoginEvent;
 import com.TestNice.servlet.eventPublisher.EventLoginService;
 import com.TestNice.servlet.service.LoginService;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,7 +37,8 @@ public class KakaoLoginController {
         System.out.println("id"+  id);
         System.out.println("pw"+  password);
 
-        ModelAndView mav = new ModelAndView();
+        //ModelAndView mav = new ModelAndView();
+        ModelAndView mav = new ModelAndView("jsonView");
 
         //파라미터 값으로 넘겨줄 엔티티 세팅
         /*Login login0 = new Login();
@@ -75,8 +78,13 @@ public class KakaoLoginController {
 
         }
 
+        Gson gson = new Gson();
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("id", loginResult.getId());
+
         mav.setViewName("/loginResult.jsp");
-        mav.addObject("loginResult", loginResult);
+        mav.addObject("loginResult", jsonObject);
         return mav;
     }
+
 }

@@ -13,7 +13,6 @@
 var json = JSON.stringify(${loginResult});
 var json2 = JSON.parse(json);
 console.log(json)
-var id2 = 'id Confirm';
 //document.write(json2.id);
 //document.write(id2);
 </script>

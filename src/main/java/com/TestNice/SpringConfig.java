@@ -1,5 +1,6 @@
 package com.TestNice;
 
+import com.TestNice.servlet.repository.BssStationRepository;
 import com.TestNice.servlet.repository.JDBCLoginRepository;
 import com.TestNice.servlet.repository.LoginRepository;
 import com.TestNice.servlet.repository.OauthLoginRepository;
@@ -34,6 +35,8 @@ public class SpringConfig {
     }
 
 
+
+
     @Bean
     public JDBCLoginRepository JDBCLoginRepository() {
         return new JDBCLoginRepository(dataSource);
@@ -42,6 +45,11 @@ public class SpringConfig {
     @Bean
     public OauthLoginRepository oauthLoginRepository() {
         return new OauthLoginRepository(dataSource);
+    }
+
+    @Bean
+    public BssStationRepository bssStationRepository() {
+        return new BssStationRepository(dataSource);
     }
 
     @Bean

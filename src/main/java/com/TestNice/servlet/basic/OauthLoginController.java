@@ -9,6 +9,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -23,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.awt.*;
 import java.util.Optional;
+
 
 @RestController
 /*@AllArgsConstructor*/
@@ -40,6 +42,7 @@ public class OauthLoginController {
         this.oAuthService = oAuthService;
     }
 
+    @ApiOperation(value = "카카오 소셜 로그인", notes ="Aouth 2.0을 통한 카카오 로그인 구현")
     @ResponseBody
     @GetMapping("/kakao")
     public ModelAndView kakaoCallback(@RequestParam String code) {
@@ -79,6 +82,7 @@ public class OauthLoginController {
 
     }
 
+    @ApiOperation(value = " 네이버 소셜 로그인 ", notes ="Aouth 2.0을 통한 네이버 로그인 구현")
     @ResponseBody
     @GetMapping("/naver")
     public ModelAndView naverCallback(@RequestParam String code, @RequestParam String state) throws JsonProcessingException {
@@ -105,9 +109,14 @@ public class OauthLoginController {
         }
         
 
-        ModelAndView mav = new ModelAndView();
+        /*ModelAndView mav = new ModelAndView();*/
+        ModelAndView mav = new ModelAndView("jsonView");
+        Gson gson = new Gson();
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("id", naverResult.getId());
         mav.setViewName("/loginResult.jsp");
-        mav.addObject("loginResult", naverResult);
+        /*mav.addObject("loginResult", naverResult);*/
+        mav.addObject("loginResult", jsonObject);
         return mav;
     }
 

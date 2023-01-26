@@ -35,11 +35,20 @@
           </button>
       </div>
       <div class="col">
-        <button class="w-100 btn btn-secondary btn-lg"
-                onclick="location.href='items.html'" type="button">회원 가입</button>
+        <button id= "pushSignUp"  class="w-100 btn btn-secondary btn-lg"
+                type="button">회원 가입</button>
       </div>
     </div>
   </form>
+    <script>
+      document.getElementById("pushSignUp").addEventListener('click',hello);
+
+      function hello(){
+        alert("회원 가입 버튼 누름")
+        window.location.href = "http://localhost:8080/signIn.jsp"
+      }
+
+    </script>
   </br>
   </br>
   </br>
@@ -63,6 +72,16 @@
   </div>
   </br>
 
+  <script>
+    function pushSignUp() {
+      console.log("회원 가입 버튼을 누름")
+
+    }
+  </script>
+  <div>
+    <h4 style="text-align: center" > 주변 스테이션 목록 가져오기 (반경 1Km)</h4>
+    <li><a href="getDistance.do"> 주변 목록 불러오기 </a></li>
+  </div>
 </div><!-- /container -->
 </body>
 </html>

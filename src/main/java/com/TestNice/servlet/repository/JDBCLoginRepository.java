@@ -54,7 +54,7 @@ public class JDBCLoginRepository implements LoginRepository{
     @Override
     public Optional<Login> loginAccount(Login login) {
 
-        String sql = "select * from member where id = ?";
+        String sql = "select * from authorLogin where id = ?";
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -90,7 +90,7 @@ public class JDBCLoginRepository implements LoginRepository{
 
     @Override
     public Optional<LoginEvent> loginAccountEvent(LoginEvent event) {
-        String sql = "select * from member where id = ?";
+        String sql = "select * from authorLogin where id = ?";
 
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -107,7 +107,7 @@ public class JDBCLoginRepository implements LoginRepository{
 
                 LoginEvent login1 = new LoginEvent(this);
                 login1.setId(rs.getString("id"));
-                login1.setPw(rs.getString("password"));
+                login1.setPw(rs.getString("pw"));
                 return Optional.of(login1);
 
             } else {
